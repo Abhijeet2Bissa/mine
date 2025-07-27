@@ -1,0 +1,25 @@
+name: NOTMEPOT
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Install Java
+        run: sudo apt install openjdk-17-jdk -y
+
+      - name: Download playit.gg
+        run: |
+          wget https://github.com/playit-cloud/playit-agent/releases/latest/download/linux_amd64.tar.gz
+          tar -xzf linux_amd64.tar.gz
+          chmod +x ./playit
+          nohup ./playit agent run &
+
+      - name: Start Minecraft Server
+        run: |
+          java -Xms2G -Xmx2G -jar paper.jar nogui
