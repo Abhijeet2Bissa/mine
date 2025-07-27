@@ -20,6 +20,7 @@ jobs:
           chmod +x playit-linux-amd64
           nohup ./playit-linux-amd64 agent run &
 
+
       - name: Accept EULA
         run: echo "eula=true" > eula.txt
 
