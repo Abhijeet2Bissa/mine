@@ -6,23 +6,19 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
 
       - name: Install Java
-        run: sudo apt update && sudo apt install openjdk-17-jdk -y
+        run: sudo apt install openjdk-17-jdk -y
 
-      - name: Download playit.gg tunnel
+      - name: Download and run playit.gg agent
         run: |
-          wget https://github.com/playit-cloud/playit-agent/releases/download/v0.16.2/playit-linux-amd64
-          chmod +x playit-linux-amd64
-          nohup ./playit-linux-amd64 agent run &
-
-
-      - name: Accept EULA
-        run: echo "eula=true" > eula.txt
+          wget https://github.com/playit-cloud/playit-agent/releases/download/v0.16.2/playit-linux-amd64 -O playit
+          chmod +x playit
+          nohup ./playit agent run &
 
       - name: Start Minecraft Server
-        run: java -Xms2G -Xmx2G -jar paper.jar nogui
+        run: |
+          java -Xms2G -Xmx2G -jar paper.jar nogui
